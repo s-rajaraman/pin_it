@@ -3,11 +3,9 @@ localStorage.clear();
 chrome.commands.onCommand.addListener(function (command) {
     console.log(command);
     if (command.indexOf('pin-page') > -1) {
-        console.log('page should be pinned');
         pin_page()
     }
     else if (command.indexOf('unpin_page') > -1) {
-        console.log('page should be unpinned');
         unpin_page();
     }
 
@@ -16,12 +14,8 @@ chrome.commands.onCommand.addListener(function (command) {
 function pin_page() {
 
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-            //console.log(tabs[0]);
 
             var tabid = tabs[0].id;
-            //console.log(tabid);
-            //console.log(tabs[0].url);
-
             var pin_array = [];
 
             if (localStorage[tabid]) {
@@ -37,7 +31,7 @@ function pin_page() {
                 pin_array.push(tabs[0].url);
             }
             localStorage[tabid] = JSON.stringify(pin_array);
-            //console.log(localStorage)
+
             chrome.browserAction.setIcon({path: chrome.extension.getURL('/pin-down.png'), tabId: tabid});
         }
     );
@@ -108,3 +102,6 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 
 });
 
+chrome.tabs.onReplaced.addListener(function(newTabId, oldTabId){
+ localStorage[newTabId] = localStorage[oldTabId];
+});
