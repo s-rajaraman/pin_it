@@ -1,0 +1,35 @@
+{
+    "name": "Pin It",
+    "description": "Pin pages down and revert back to it",
+    "version": "1.0.0.0",
+    "manifest_version": 2,
+    "background": {
+        "page": "background.html"
+    },
+    "icons": {
+        "16": "pin-up-logo.png",
+        "48": "pin-up-logo.png"
+    },
+    "commands": {
+        "pin-page": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+P"
+            },
+            "description": "Puts a pin on the page"
+        },
+        "unpin_page": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+U"
+            },
+            "description": "Reverts to the last pinned page"
+        }
+    },
+    "browser_action": {
+        "default_icon": "pin-up-logo.png",           // optional
+        "default_title": "Pin It"      // optional; shown in tooltip
+    },
+
+    "permissions": [
+        "tabs"
+    ]
+}
