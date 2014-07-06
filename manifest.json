@@ -7,8 +7,8 @@
         "page": "background.html"
     },
     "icons": {
-        "16": "pin-up-logo.png",
-        "48": "pin-up-logo.png"
+        "16": "logo16.png",
+        "48": "logo48.png"
     },
     "commands": {
         "pin-page": {
@@ -25,8 +25,9 @@
         }
     },
     "browser_action": {
-        "default_icon": "pin-up-logo.png",           // optional
-        "default_title": "Pin It"      // optional; shown in tooltip
+        "default_icon": "pin-up.png",           // optional
+        "default_title": "Pin It",      // optional; shown in tooltip
+        "default_popup": "browserAction.html"
     },
 
     "permissions": [

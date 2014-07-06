@@ -52,7 +52,7 @@ function unpin_page() {
         chrome.tabs.update(tab.id, {url: url});
     })
 }
-var x = 0;
+
 //makes sure that the right logo shows
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     if (!localStorage[tabId]) return;
@@ -100,8 +100,28 @@ chrome.browserAction.onClicked.addListener(function (tab) {
         chrome.browserAction.setIcon({path: chrome.extension.getURL('/pin-down.png'), tabId: tabid});
     }
 
+
 });
 
 chrome.tabs.onReplaced.addListener(function(newTabId, oldTabId){
  localStorage[newTabId] = localStorage[oldTabId];
+ localStorage.removeItem(oldTabId);
 });
+
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        //browserAction indicates that it is being viewed
+        //background script (this script) figures out the tab id of browser action and sends the string of urls
+        //background script should delete urls that is deleted on the browser action
+        if(!request.query) return;
+        chrome.tabs.query(
+            {currentWindow: true, active : true},
+            function(tabArray){
+            console.log("The active tab id is ", tabArray[0].id);
+                var message = {};
+                message['sendurls'] = localStorage[tabArray[0].id];
+            console.log(message['sendurls']);
+                chrome.runtime.sendMessage(message);
+
+            });
+    });
